@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+    <head>
+        <title>블로그</title>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style type="text/css">
+        a:link { color: black; text-decoration: none; font-family: Oswald;}
+        a:visited { color: black; text-decoration: none;}
+        body{
+            width: 70%;
+            margin-left: 15%
+        }
+       </style>
+    <body>
+        <div class ="site-header" style="text-align: center;  border-bottom: 1px solid gray;">
+                
+            <h1><br><a href="/">  <span> teal's blog </span></a></h1> 
+        </div>
+        <div id ="category">
+                <h1><span>카테고리</span></h1> 
+                {% for category in categor %}
+                <span style="font-size: 25px"><a href="{% url 'post_list' num=category.number %}">{{ category.name }} </a></span><br>
+            {% endfor %}
+        </div>
+        <div id ="main-space">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

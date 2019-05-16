@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="post">
+        <div id ="main">
+            <span style="font-size: 35px"><a href="{% url 'post_detail' number=num pk=post.pk %}">{{ post.title }} </a></span>
+            <br><span id="date" >{{post.published_date}} 작성</span><br>
+            <p>{{ post.text|linebreaksbr }}</p>
+            <br>
+        </div>
+        <div id="button"style="float: right;">
+                <a class="btn btn-default" href="{% url 'post_delete' number=num pk=post.pk %}"><span>포스트 삭제</span></a>
+        </div>
+        <span style="float: right">&nbsp;&nbsp;</span>
+        <div id="button"style="float: right;">
+                <a class="btn btn-default" href="{% url 'post_edit' number=num pk=post.pk %}"><span>포스트 수정</span></a>
+        </div>
+
+
+    </div>
+{% endblock %}

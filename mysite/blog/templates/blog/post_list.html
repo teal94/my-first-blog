@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div id ="main">
+        {% for post in posts %}
+            <span style="font-size: 35px"><a href="{% url 'post_detail' number=num pk=post.pk %}">{{ post.title }} </a></span>
+            <span style="font-size: 15px">{{post.published_date}} 작성</span><br>
+        {% endfor %}
+    </div><br>
+    <div id="button"style="float: right;">
+            <a href="{% url 'post_new' number=num %}" class="top-menu"><span class="glyphicon glyphicon-plus">포스트 작성 </span></a>
+    </div>
+{% endblock %}

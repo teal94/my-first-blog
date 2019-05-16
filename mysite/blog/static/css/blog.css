@@ -1,0 +1,45 @@
+h1 a {
+    font-family: Oswald;
+}
+#main{
+    padding-left: 50px; 
+    padding-top: 20px;
+}
+#main-space{
+    float: left;
+    width: 78%;
+}
+#category{
+    text-align: center; 
+    border-right: 1px solid gray; 
+    width: 20%; 
+    float:left; 
+    height: 100%;
+}
+#button{
+    border-radius: 30px;
+    background-color: #eeeeee; 
+    width: fit-content;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font: bold;
+}
+#date{
+    font-size: 15px;
+    float: right;
+}
+@media screen and (max-width: 760px)
+{
+    #category{
+        float: none;
+        border-right:0px;
+        width: auto;
+        height: auto;
+        border-bottom : 1px solid gray;
+    }
+    #main-space{
+        width: auto;
+        float: none;
+    }
+}

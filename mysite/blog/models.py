@@ -4,6 +4,7 @@ from django.utils import timezone
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    number = models.IntegerField()
     title = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField(
@@ -17,3 +18,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    number = models.IntegerField()
+    def publish(self, num):
+        number = num
+        self.save()
+
+    def __str__(self):
+        return self.name
