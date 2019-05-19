@@ -5,8 +5,16 @@
         <div id ="main">
             <span style="font-size: 35px"><a href="{% url 'post_detail' number=num pk=post.pk %}">{{ post.title }} </a></span>
             <br><span id="date" >{{post.published_date}} 작성</span><br>
+            {% if post.img %}
+                <img src = "{{ post.img.url }}"/>
+            {% endif %}
+
             <p>{{ post.text|linebreaksbr }}</p>
+            
+            {% if post.file %}
             <br>
+                <a href = "{{ post.file.url }}" download>첨부파일 {{post.file}}</a>
+            {% endif %}
         </div>
         <div id="button"style="float: right;">
                 <a class="btn btn-default" href="{% url 'post_delete' number=num pk=post.pk %}"><span>포스트 삭제</span></a>
@@ -14,8 +22,37 @@
         <span style="float: right">&nbsp;&nbsp;</span>
         <div id="button"style="float: right;">
                 <a class="btn btn-default" href="{% url 'post_edit' number=num pk=post.pk %}"><span>포스트 수정</span></a>
-        </div>
+        </div><br><br>
+    </div>
+    <div id = "comment">
+            {% for comment in comments %}
+            <div style="border-bottom : 1px solid #eeeeee;">
+                <span style="font-size: 35px">{{ comment.name }}</span><br>
+                <span style="font-size: 20px; word-break: break-all;">{{ comment.text }}</span><br>
+                <span style="font-size: 15px">{{comment.created_date}} 작성</span>
+                <div id="button"style="float: right;">
+                        <a href="{% url 'comment_delete' number=num post_pk=comment.num comment_pk=comment.pk %}" class="top-menu"><span class="glyphicon glyphicon-plus">댓글 삭제</span></a>
+                </div><br><br><br>
+            </div>
+            {% endfor %}
 
-
+            <form method="POST" class="comment-form" action="" enctype="multipart/form-data">{% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div class="fieldWrapper">
+                        {{ form.name.errors }}
+                        <label for="id_title" style="font-size: 20px;">댓글 제목</label><br>
+                        {{ form.name }}
+                </div><br>
+                <div class="fieldWrapper">
+                        {{ form.text.errors }}
+                        <label for="id_title" style="font-size: 20px;">댓글 내용</label><br>
+                        {{ form.text }}
+                        <div style="float: right;">
+                                <button type="submit" class="save btn btn-default">댓글 작성</button>
+                        </div>
+                </div>
+                <br><br><br>
+            </form>     
     </div>
 {% endblock %}

@@ -1,9 +1,35 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <h1>New post</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+
+    <div style="padding-left: 50px">
+        <h1>New post</h1>
+        <form method="POST" class="post-form" action="" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.non_field_errors }}
+            
+            <div class="fieldWrapper">
+                    {{ form.title.errors }}
+                    <label for="id_title" style="font-size: 20px;">제목</label><br>
+                    {{ form.title }}
+            </div><br>
+            <div class="fieldWrapper" id = "input-form">
+                    {{ form.text.errors }}
+                    <label for="id_text" style="font-size: 20px;">내용</label><br>
+                    {{ form.text }}
+            </div><br>
+            <div class="fieldWrapper" id = "print-img">
+                    {{ form.img.errors }}
+                    <label for="id_img" style="font-size: 20px;">이미지</label><br>
+                    {{ form.img }}
+            </div>
+            <div class="fieldWrapper" id = "print-img">
+                    {{ form.file.errors }}
+                    <label for="id_file" style="font-size: 20px;">첨부파일</label><br>
+                    {{ form.file }}
+            </div>
+            <div style="float: right;">
+                <button type="submit" class="save btn btn-default">작성 완료</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

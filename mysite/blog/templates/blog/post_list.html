@@ -2,12 +2,47 @@
 
 {% block content %}
     <div id ="main">
+
+
         {% for post in posts %}
+        
             <span style="font-size: 35px"><a href="{% url 'post_detail' number=num pk=post.pk %}">{{ post.title }} </a></span>
-            <span style="font-size: 15px">{{post.published_date}} 작성</span><br>
+            <span style="font-size: 15px">{{post.published_date}} 작성</span><br><br>
+    
         {% endfor %}
+        <!-- &laquo; &raquo; -->
+        
+{% if posts.has_other_pages %} 
+<div class="pagination" style="font-size: 30px;font-weight: 500;">
+    {% if posts.has_previous %}
+        <span><a href="?page={{ 1 }}">&laquo;</a></span>
+        <span><a href="?page={{ posts.previous_page_number }}">&lsaquo;</a></span>
+    {% else %}
+      <span>&laquo;</span>
+      <span>&lsaquo;</span>
+    {% endif %}
+
+    {% for i in posts.paginator.page_range %}
+        {% if cur_max >= i and cur_min <= i %}
+            {% if posts.number == i %}
+                <span class="active" style="border: 1px solid #bbbbbb; background-color: #bbbbbb;
+                border-radius: 100px;font-weight: 700;font-size: 30px;">{{ i }} </span>
+            {% else %}
+                <span><a href="?page={{ i }}">{{ i }}</a></span>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+        {% if posts.has_next %}
+        <span><a href="?page={{ posts.next_page_number }}">&rsaquo;</a></span>
+        <span><a href="?page={{ max_len }}">&raquo;</a></span>
+        {% else %}
+        <span>&rsaquo;</span>
+        <span>&raquo;</span>
+        {% endif %}
+{% endif %}        
     </div><br>
     <div id="button"style="float: right;">
             <a href="{% url 'post_new' number=num %}" class="top-menu"><span class="glyphicon glyphicon-plus">포스트 작성 </span></a>
     </div>
+    
 {% endblock %}
