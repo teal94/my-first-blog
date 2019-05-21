@@ -12,16 +12,18 @@
                     <label for="id_title" style="font-size: 20px;">제목</label><br>
                     {{ form.title }}
             </div><br>
-            <div class="fieldWrapper" id = "input-form">
+
+
+            <div>
                     {{ form.text.errors }}
-                    <label for="id_text" style="font-size: 20px;">내용</label><br>
+                        <label for="id_text" style="font-size: 20px;">내용</label><br>
                     {{ form.text }}
             </div><br>
             <div class="fieldWrapper" id = "print-img">
                     {{ form.img.errors }}
                     <label for="id_img" style="font-size: 20px;">이미지</label><br>
                     {{ form.img }}
-            </div>
+            </div><br>
             <div class="fieldWrapper" id = "print-img">
                     {{ form.file.errors }}
                     <label for="id_file" style="font-size: 20px;">첨부파일</label><br>

@@ -125,4 +125,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static') # 정적파일 경로 DEBUG가Tru
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-#ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com'] #배포할때는 다음과 같은 형식으로 변ㄴ경
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com'] #배포할때는 다음과 같은 형식으로 변경

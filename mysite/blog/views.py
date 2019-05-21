@@ -27,19 +27,30 @@ def category_setting(request):
 
 
 def post_list(request, num=1):
+    posts_per_page = 7
+
+    text = request.GET.get('text', '')
+    target = request.GET.get('target', '')
+
     list = Post.objects.filter(number = num).order_by('-created_date') # 카테고리 별로 불러오기
+    if target == "title":
+        list = list.filter(title__icontains = text)
+    elif target == "contents":
+        list = list.filter(text__icontains = text)
+    
+
     page = request.GET.get('page',1)
     cur_max = int((int(page)-1) / 5) * 5 + 5;
     cur_min = int((int(page)-1) / 5) * 5 + 1;
-    paginator = Paginator(list, 5)
+    paginator = Paginator(list, posts_per_page)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    max_len = math.ceil(len(list)/5.0)
-    return render(request, 'blog/post_list.html', {'posts' : posts, 'num':num, 'max_len': max_len, 'cur_max':cur_max,'cur_min':cur_min,})
+    max_len = math.ceil(len(list)/posts_per_page)
+    return render(request, 'blog/post_list.html', {'posts' : posts, 'num':num, 'max_len': max_len, 'cur_max':cur_max,'cur_min':cur_min, 'text':text,'target':target})
 
 
 def post_detail(request, number, pk): #  포스트 출력 및 댓글입력
@@ -74,6 +85,7 @@ def post_new(request, number):
     else:    
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
+
 
 def comment_new(request, number, pk): # 댓글 달기
     if request.method == "POST":

@@ -12,16 +12,15 @@
                         {{ form.name }}
                 </div><br>
                 <div style="float: right;">
-                        <button type="submit" class="save btn btn-default"style="font-size: 25px">카테고리 작성</button>
+                        <button type="submit" class="save btn btn-primary"style="font-size: 25px">카테고리 작성</button>
                 </div> 
-
             </form> 
-            
+
             {% for category in categor %}
             <div style="border-bottom : 1px solid #eeeeee;">
                 <span style="font-size: 35px">{{ category.name }}</span><br>
-                <div id="button"style="float: right;">
-                        <a href="{% url 'category_delete' pk=category.pk %}" class="top-menu"><span class="glyphicon glyphicon-plus">카테고리 삭제</span></a>
+                <div style="float: right;">
+                        <a href="{% url 'category_delete' pk=category.pk %}" class="save btn btn-primary button-text-color"><span>카테고리 삭제</span></a>
                 </div><br><br><br>
             </div>
             {% endfor %}

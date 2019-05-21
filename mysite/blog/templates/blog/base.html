@@ -2,47 +2,62 @@
 <html>
     <head>
         <title>블로그</title>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}?ver=15">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}?ver=26">
         <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- 부트스트랩 CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+        <!-- 폰트어썸 CDN -->
+        <link rel=”stylesheet” href=”http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css“>
     </head>
+
     <style type="text/css">
         a:link { color: black; text-decoration: none; font-family: Oswald;}
         a:visited { color: black; text-decoration: none;}
-        body{
-            width: 70%;
-            margin-left: 15%
-        }
-       </style>
-    <body>
-        <div class ="site-header" style="text-align: center;  border-bottom: 1px solid gray;">
-                
-            <h1><br><a href="/">  <span> teal's blog </span></a></h1> 
-        </div>
-        <div id ="category" class = "category"> 
-                <span style="font-size: 35px; font-weight:700;">카테고리</span><br>
-                <div>
-                    
-                    {% for category in categor %}
-                        {% if category.number != num %}
-                        <div id="category-list">
-                            <span id="category-element"><a href="{% url 'post_list' num=category.number %}">{{ category.name }}</a></span><br>
-                        </div>
-                        {% elif category.number == num %}
-                        <div id="category-select">
+    </style>
+    
+    <body class="wrap">
+        <div style="margin-left: 15%; width: 70%;">
+            <div class ="site-header">   
+                <h1><br><a href="/">  <span> teal's blog </span></a></h1> 
+            </div>
+            <div id ="category" class = "category navbar navbar-default"> 
+                    <span style="font-size: 35px; font-weight:700;">카테고리</span><br>
+                    <div>
+                        
+                        {% for category in categor %}
+                            {% if category.number != num %}
+                            <div id="category-list">
                                 <span id="category-element"><a href="{% url 'post_list' num=category.number %}">{{ category.name }}</a></span><br>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                    <span id ="category-button">∧</span>
+                            </div>
+                            {% elif category.number == num %}
+                            <div id="category-select">
+                                    <span id="category-element"><a href="{% url 'post_list' num=category.number %}">{{ category.name }}</a></span><br>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                        <span id ="category-button">∧</span>
+
+            </div>
+            <div id ="main-space" ">
+                {% block content %}
+                {% endblock %}
+            </div>
 
         </div>
-        <div id ="main-space">
-            {% block content %}
-            {% endblock %}
-        </div>
+        <footer  id = "footer-text">
+            <div style="font-size:30px;">
+                <a href="https://github.com/teal94"><span class="fab fa-github-square"></span></a>&nbsp;&nbsp;
+                <a href="https://www.facebook.com/profile.php?id=100008022575058"><span class="fab fa-facebook-square"></span></a>&nbsp;&nbsp;
+                <a href="mailto:abdh94@naver.com"><span class="fas fa-envelope-square"></span></a>&nbsp;&nbsp;&nbsp
+                <span style="font-size:20px;" class="far fa-copyright">&nbspteal</span>
+            </div>
+            </footer>
         <script>
             $(document).ready(function(){
                 $(".category>#category-button").click(function(){
@@ -58,5 +73,7 @@
                 });
             });
         </script>
+
     </body>
+
 </html>

@@ -2,47 +2,53 @@
 
 {% block content %}
     <div id ="main">
+        <div id="post-list">
+            {% for post in posts %}
+                <span style="font-size: 35px"><a href="{% url 'post_detail' number=num pk=post.pk %}">{{ post.title }} </a></span>
+                <span style="font-size: 15px; color:#aaaaaa;">{{post.published_date|date:"Y-m-d"}} 작성</span><br><br>
+            {% endfor %}
+        </div>
 
-
-        {% for post in posts %}
-        
-            <span style="font-size: 35px"><a href="{% url 'post_detail' number=num pk=post.pk %}">{{ post.title }} </a></span>
-            <span style="font-size: 15px">{{post.published_date}} 작성</span><br><br>
-    
-        {% endfor %}
-        <!-- &laquo; &raquo; -->
-        
-{% if posts.has_other_pages %} 
-<div class="pagination" style="font-size: 30px;font-weight: 500;">
-    {% if posts.has_previous %}
-        <span><a href="?page={{ 1 }}">&laquo;</a></span>
-        <span><a href="?page={{ posts.previous_page_number }}">&lsaquo;</a></span>
-    {% else %}
-      <span>&laquo;</span>
-      <span>&lsaquo;</span>
-    {% endif %}
-
-    {% for i in posts.paginator.page_range %}
-        {% if cur_max >= i and cur_min <= i %}
-            {% if posts.number == i %}
-                <span class="active" style="border: 1px solid #bbbbbb; background-color: #bbbbbb;
-                border-radius: 100px;font-weight: 700;font-size: 30px;">{{ i }} </span>
+        {% if posts.has_other_pages %} 
+            <ul class="pagination">
+            {% if posts.has_previous %}
+                <li><a href="?page={{ 1 }}&target={{target}}&text={{text}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li><a href="?page={{ posts.previous_page_number }}&target={{target}}&text={{text}}"><span aria-hidden="true">&lsaquo;</span></a></li>
             {% else %}
-                <span><a href="?page={{ i }}">{{ i }}</a></span>
+                <li><a href="#"aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li><a href="#"aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a></li>
+            {% endif %}
+            {% for i in posts.paginator.page_range %}
+                {% if cur_max >= i and cur_min <= i %}
+                    {% if posts.number == i %}
+                        <li><a href="#" style="background-color: #eeeeee;">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}&target={{target}}&text={{text}}">{{ i }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+                <li><a href="?page={{ posts.next_page_number }}&target={{target}}&text={{text}}" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a></li>
+                <li><a href="?page={{ max_len }}&target={{target}}&text={{text}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li><a href="#" aria-label="Next"><span>&rsaquo;</span></a></li>
+                <li><a href="#" aria-label="Next"><span>&raquo;</span></a></li>
             {% endif %}
         {% endif %}
-    {% endfor %}
-        {% if posts.has_next %}
-        <span><a href="?page={{ posts.next_page_number }}">&rsaquo;</a></span>
-        <span><a href="?page={{ max_len }}">&raquo;</a></span>
-        {% else %}
-        <span>&rsaquo;</span>
-        <span>&raquo;</span>
-        {% endif %}
-{% endif %}        
-    </div><br>
-    <div id="button"style="float: right;">
-            <a href="{% url 'post_new' number=num %}" class="top-menu"><span class="glyphicon glyphicon-plus">포스트 작성 </span></a>
+
+        </ul><br>
+        <div style="float: right;font-size:25;">
+                <a class="save btn btn-primary button-text-color" href="{% url 'post_new' number=num %}"><span>포스트 작성</span></a>
+        </div>
+
+        <form action="" method="GET">{% csrf_token %}
+                <select name = "target" style="float: left; height: 33px; margin-right: 10px">
+                        <option value="title">제목</option>
+                        <option value="contents">내용</option>
+                    </select>
+                <input type="text" name="text" class="form-control" value="{{ text }}" style="width: 50%; float: left;margin-right: 10px">
+                <input type="submit" class="save btn btn-default" value="검색">
+        </form>
     </div>
-    
 {% endblock %}
